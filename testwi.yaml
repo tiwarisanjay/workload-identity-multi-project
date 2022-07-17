@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wi-test
+  namespace: testns
+spec:
+  serviceAccountName: testksa
+  containers:
+    - command:
+      - sh
+      - -c
+      - |
+        set -x 
+        gcloud config list
+        gcloud config set project mylearningpro2
+        gcloud config list
+        gcloud secrets list
+        gcloud secrets versions access latest --secret="test-secret" 
+      image: google/cloud-sdk:alpine
+      name: testworkload
